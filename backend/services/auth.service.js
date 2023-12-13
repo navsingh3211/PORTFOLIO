@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import User from '../models/user.model.js';
 import {generateToken} from '../utils/jwt.util.js';
 import MESSAGES from '../utils/commonMessage.util.js';
+import CONSTANTS from '../utils/constants.util.js';
 import {apiresponse,authenticationResponse} from '../utils/commonResponse.util.js';
 
 
@@ -20,7 +21,7 @@ const signUpService = async(req,res)=>{
 
         const isUserExit = await User.findOne({username:body.username,email:body.email,status:true});
         if(isUserExit){
-            return await apiresponse(false, MESSAGES.USER_ALREADY_EXIT,401);
+            return await apiresponse(false, MESSAGES.USER_ALREADY_EXIT,CONSTANTS.CODE.OK);
         }
         let hashedPassword = await bcrypt.hash(body.password, 10);
         //  console.log('rom rom bhaiyo',hashedPassword);
@@ -39,7 +40,7 @@ const signUpService = async(req,res)=>{
             username: account.username,
             email: account.email
         });
-        return await authenticationResponse(true, MESSAGES.USER_SIGNUP_COMPLETE, {}, {
+        return await apiresponse(true, MESSAGES.USER_SIGNUP_COMPLETE, CONSTANTS.CODE.OK, {
                 accessToken: jwtToken,
                 username: account ? account.username : "",
                 userid: account._id,

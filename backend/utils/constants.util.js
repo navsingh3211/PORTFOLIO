@@ -22,6 +22,9 @@ const CONSTANTS = {
     SUPER_ADMIN: 'SUPER_ADMIN',
     ADMIN: 'ADMIN',
     STUDENT: 'STUDENT'
+  },
+  CODE:{
+    OK:201
   }
 };
 
